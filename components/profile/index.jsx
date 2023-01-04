@@ -224,7 +224,7 @@ const Profile = ({ user }) => {
 						{user.name}
 					</Text>
 
-					<Text fontSize="sm" lineHeight={5} w={230} noOfLines={1}>
+					<Text fontSize="sm" lineHeight={5} w={164} noOfLines={1}>
 						{user.email}
 					</Text>
 				</Flex>
