@@ -137,17 +137,21 @@ const Sidebar = ({ session, isAdmin, isCustomer, isUserPage, isSidebarOpen, onSi
 									</Link>
 								</NextLink>
 
+								<NextLink href="/cart" passHref>
+									<Link as="span" display="block" py={2} lineHeight={6} active={router.pathname.includes('cart') ? 1 : 0} onClick={onSidebarClose}>
+										Cart
+									</Link>
+								</NextLink>
+
 								<NextLink href="/reviews" passHref>
 									<Link as="span" display="block" py={2} lineHeight={6} active={router.pathname.includes('reviews') ? 1 : 0} onClick={onSidebarClose}>
 										Reviews
 									</Link>
 								</NextLink>
 
-								<NextLink href="/contact" passHref>
-									<Link as="span" display="block" py={2} lineHeight={6} active={router.pathname.includes('contact') ? 1 : 0} onClick={onSidebarClose}>
-										Call Us
-									</Link>
-								</NextLink>
+								<Link href="/#contact" display="block" py={2} lineHeight={6} active={router.pathname.includes('contact') ? 1 : 0} onClick={onSidebarClose}>
+									Call Us
+								</Link>
 							</Flex>
 						)}
 					</GridItem>
