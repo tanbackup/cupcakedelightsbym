@@ -20,7 +20,7 @@ const Status = ({ order }) => {
 								</Flex>
 
 								<Text fontSize="sm" fontWeight="semibold" color="accent-1">
-									To Pay
+									Pending
 								</Text>
 							</Flex>
 
@@ -39,7 +39,7 @@ const Status = ({ order }) => {
 								</Flex>
 
 								<Text fontSize="sm" fontWeight="semibold" color="accent-1">
-									To Ship
+									To Pick Up
 								</Text>
 							</Flex>
 
@@ -58,7 +58,7 @@ const Status = ({ order }) => {
 								</Flex>
 
 								<Text fontSize="sm" fontWeight="semibold" color="accent-1">
-									To Receive
+									To Deliver
 								</Text>
 							</Flex>
 

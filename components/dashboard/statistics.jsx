@@ -93,14 +93,14 @@ const Statistics = ({ sales_query }) => {
 			<GridItem colSpan={{ base: 12, md: 6, '2xl': 3 }}>
 				<Card cursor="pointer">
 					<Flex justify="space-between" align="center">
-						{sales_query === 'net' ? (
+						{sales_query === 'gross' ? (
 							<Flex direction="column" gap={1} w="calc(100% - 76px)">
 								<Text fontSize="2xl" fontWeight="semibold" color="accent-1" noOfLines={1}>
 									₱{net(filter).toFixed(2)}
 								</Text>
 
 								<Text fontSize="sm" fontWeight="medium" color="accent-1">
-									Net Sales
+									Gross Sales
 								</Text>
 							</Flex>
 						) : sales_query === 'daily' ? (

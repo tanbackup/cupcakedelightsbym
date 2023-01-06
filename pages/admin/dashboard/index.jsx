@@ -8,7 +8,7 @@ const Dashboard = () => {
 	const { register, watch, setValue } = useForm()
 
 	useEffect(() => {
-		setValue('sales_query', 'net')
+		setValue('sales_query', 'gross')
 	}, [])
 
 	return (
@@ -20,7 +20,7 @@ const Dashboard = () => {
 					</Text>
 
 					<Select size="lg" w="auto" {...register('sales_query')}>
-						<chakra.option value="net">Net Sales</chakra.option>
+						<chakra.option value="gross">Gross Sales</chakra.option>
 						<chakra.option value="daily">Daily Sales</chakra.option>
 						<chakra.option value="weekly">Weekly Sales</chakra.option>
 						<chakra.option value="monthly">Monthly Sales</chakra.option>

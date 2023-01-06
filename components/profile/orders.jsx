@@ -50,7 +50,7 @@ const Orders = ({ user, orders }) => {
 
 										<Td>
 											<Badge variant="tinted" colorScheme="brand">
-												{order.status}
+												{order.status === 'To Pay' ? 'Pending' : order.status === 'To Ship' ? 'To Pick Up' : order.status === 'To Receive' ? 'To Deliver' : order.status === 'Completed' ? 'Completed' : order.status === 'Cancelled' && 'Cancelled'}
 											</Badge>
 										</Td>
 

@@ -50,7 +50,7 @@ const Orders = () => {
 
 						<Td>
 							<Badge variant="tinted" colorScheme={order.status === 'Cancelled' ? 'red' : 'brand'}>
-								{order.status}
+								{order.status === 'To Pay' ? 'Pending' : order.status === 'To Ship' ? 'To Pick Up' : order.status === 'To Receive' ? 'To Deliver' : order.status === 'Completed' ? 'Completed' : order.status === 'Cancelled' && 'Cancelled'}
 							</Badge>
 						</Td>
 
@@ -68,9 +68,9 @@ const Orders = () => {
 				select={(register) => (
 					<Flex flex={1} justify="end" align="center" gap={3}>
 						<Select placeholder="Status" size="lg" w="auto" {...register('status')}>
-							<option value="To Pay">To Pay</option>
-							<option value="To Ship">To Ship</option>
-							<option value="To Receive">To Receive</option>
+							<option value="To Pay">Pending</option>
+							<option value="To Ship">To Pick Up</option>
+							<option value="To Receive">To Deliver</option>
 							<option value="Completed">Completed</option>
 						</Select>
 					</Flex>

@@ -77,15 +77,17 @@ const ReviewModal = ({ order }) => {
 	const onSubmit = async (data) => {
 		setIsLoading(true)
 
-		let res = null
+		if (image) {
+			let res = null
 
-		for (const item of [image]) {
-			const formData = new FormData()
+			for (const item of [image]) {
+				const formData = new FormData()
 
-			formData.append('file', item)
-			formData.append('upload_preset', 'servers')
+				formData.append('file', item)
+				formData.append('upload_preset', 'servers')
 
-			res = await axios.post('https://api.cloudinary.com/v1_1/cupcakedelightsbym/image/upload', formData)
+				res = await axios.post('https://api.cloudinary.com/v1_1/cupcakedelightsbym/image/upload', formData)
+			}
 		}
 
 		addMutation.mutate({
@@ -95,7 +97,7 @@ const ReviewModal = ({ order }) => {
 			order: {
 				id: order._id
 			},
-			image: res.data.secure_url,
+			image: image ? res.data.secure_url : '',
 			ratings: Number(data.ratings),
 			reviews: data.reviews
 		})
