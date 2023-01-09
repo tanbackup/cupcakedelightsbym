@@ -3,13 +3,133 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import api from 'instance'
-import { AspectRatio, Button, chakra, Divider, Flex, FormControl, FormErrorMessage, Icon, IconButton, Image, Select, Spinner, Text, Textarea, useDisclosure, useToast } from '@chakra-ui/react'
+import { AspectRatio, Button, chakra, Divider, Flex, FormControl, FormErrorMessage, Icon, IconButton, Image, Select, Spinner, Text, Textarea, useDisclosure, useTimeout, useToast } from '@chakra-ui/react'
 import { FaFacebookMessenger } from 'react-icons/fa'
 import { FiPlus, FiStar, FiX } from 'react-icons/fi'
 import Card from 'components/_card'
 import Modal from 'components/_modal'
 import Toast from 'components/_toast'
 import { month } from 'functions/month'
+import { currency } from 'functions/currency'
+
+const ReceiptModal = ({ order }) => {
+	const disclosure = useDisclosure()
+	const { data: receipt, isFetched: isReceiptFetched } = useQuery(['receipt'], () => api.get('/receipts', order._id))
+
+	if (!isReceiptFetched) {
+		return <Spinner color="brand.default" />
+	}
+
+	return (
+		<Modal
+			header="off"
+			toggle={(onOpen) => (
+				<Button
+					size="lg"
+					onClick={() => {
+						onOpen()
+						setTimeout(() => {
+							window.print()
+						}, 500)
+					}}
+				>
+					View Receipt
+				</Button>
+			)}
+			disclosure={disclosure}
+		>
+			<chakra.div bg="white" m={-6} p={6} fontFamily="monospace">
+				<Flex direction="column" gap={3}>
+					<Text mb={3} fontSize={20} fontWeight="semibold" color="black" textAlign="center">
+						Cupcake Delights By M.
+					</Text>
+
+					<Divider variant="dashed" borderColor="black" />
+
+					<Flex justify="space-between" align="center" gap={6}>
+						<Text fontSize={16} color="black">
+							Name
+						</Text>
+
+						<Text fontSize={16} fontWeight="semibold" color="black">
+							{receipt.name}
+						</Text>
+					</Flex>
+
+					<Flex justify="space-between" align="center" gap={6}>
+						<Text fontSize={16} color="black">
+							Order
+						</Text>
+
+						<Text fontSize={16} fontWeight="semibold" color="black">
+							#{order._id.slice(15, 30)}
+						</Text>
+					</Flex>
+
+					<Flex justify="space-between" align="center" gap={6}>
+						<Text fontSize={16} fontWeight="semibold" color="black">
+							Date
+						</Text>
+
+						<Text fontSize={16} fontWeight="semibold" color="black">
+							{receipt.created.split(',')[0]}
+						</Text>
+					</Flex>
+
+					<Flex justify="space-between" align="center" gap={6}>
+						<Text fontSize={16} color="black">
+							Time
+						</Text>
+
+						<Text fontSize={16} fontWeight="semibold" color="black">
+							{receipt.created.split(',')[1]}
+						</Text>
+					</Flex>
+
+					<Divider variant="dashed" borderColor="black" />
+
+					<Flex justify="space-between" align="center" gap={6}>
+						<Text fontSize={16} color="black">
+							Subtotal
+						</Text>
+
+						<Text fontSize={16} fontWeight="semibold" color="black">
+							{currency(receipt.subtotal)}
+						</Text>
+					</Flex>
+
+					<Flex justify="space-between" align="center" gap={6}>
+						<Text fontSize={16} color="black">
+							Discount
+						</Text>
+
+						<Text fontSize={16} fontWeight="semibold" color="black">
+							{currency(receipt.discount)}
+						</Text>
+					</Flex>
+
+					<Divider variant="dashed" borderColor="black" />
+
+					<Flex justify="space-between" align="center" gap={6}>
+						<Text fontSize={18} fontWeight="semibold" color="black">
+							Total
+						</Text>
+
+						<Text fontSize={18} fontWeight="semibold" color="black">
+							{currency(receipt.total)}
+						</Text>
+					</Flex>
+
+					<Divider variant="dashed" borderColor="black" />
+
+					<Text mt={3} fontSize={20} fontWeight="semibold" color="black" textAlign="center">
+						***** THANK YOU *****
+					</Text>
+				</Flex>
+			</chakra.div>
+		</Modal>
+	)
+}
 
 const ReviewModal = ({ order }) => {
 	const disclosure = useDisclosure()
@@ -351,6 +471,8 @@ const Details = ({ session, order }) => {
 				</Flex>
 
 				<Flex direction="column" gap={3}>
+					<ReceiptModal order={order} />
+
 					{session.user.role === 'Admin' && (
 						<>
 							{order.ship.status ? (

@@ -87,7 +87,7 @@ const AppLayout = (props) => {
 					</chakra.main>
 				</chakra.div>
 
-				<MessengerChat
+				{/* <MessengerChat
 					pageId="100089207020662"
 					language="sv_SE"
 					themeColor={'#4747EB'}
@@ -114,7 +114,7 @@ const AppLayout = (props) => {
 					onMessengerLoad={() => {
 						console.log('onMessengerLoad')
 					}}
-				/>
+				/> */}
 			</>
 		)
 	}

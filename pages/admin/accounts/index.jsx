@@ -10,6 +10,7 @@ import { month } from 'functions/month'
 const Accounts = () => {
 	const router = useRouter()
 	const { data: users, isFetched: isUsersFetched } = useQuery(['users'], () => api.all('/users'))
+	const { data: orders, isFetched: isOrdersFetched } = useQuery(['orders'], () => api.all('/orders'))
 
 	return (
 		<Container>
@@ -42,7 +43,7 @@ const Accounts = () => {
 								</Td>
 
 								<Td>
-									<Text>0</Text>
+									<Text>{orders.filter((order) => order.user.id === user._id).filter((order) => order.status === 'Completed').length}</Text>
 								</Td>
 
 								<Td>

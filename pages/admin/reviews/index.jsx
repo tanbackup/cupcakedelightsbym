@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import api from 'instance'
-import { AspectRatio, Avatar, Button, Container, Flex, Icon, Image, SimpleGrid, Skeleton, Text, useDisclosure } from '@chakra-ui/react'
+import { AspectRatio, Avatar, Button, chakra, Container, Flex, Icon, Image, SimpleGrid, Skeleton, Text, useDisclosure } from '@chakra-ui/react'
 import { FiStar } from 'react-icons/fi'
 import Card from 'components/_card'
 import Modal from 'components/_modal'
@@ -58,7 +58,9 @@ const ViewModal = ({ users, review, key }) => {
 							{review.reviews}
 						</Text>
 
-						<Image borderRadius={12} alt={review._id} src={review.image} />
+						<AspectRatio ratio={1}>
+							<chakra.div>{review.image && <Image borderRadius={12} alt={review._id} src={review.image} />}</chakra.div>
+						</AspectRatio>
 					</Flex>
 				</Card>
 			)}

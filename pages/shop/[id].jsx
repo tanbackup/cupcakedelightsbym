@@ -104,7 +104,7 @@ const Shop = () => {
 
 								<Input value={product.stocks ? quantity : 'Out Of Stocks'} borderRadius="full" size="lg" textAlign="center" readOnly />
 
-								<InputRightElement as="button" pt={1} pr={1} color="accent-1" cursor="pointer" onClick={() => setQuantity((prev) => prev + 1)}>
+								<InputRightElement as="button" pt={1} pr={1} color="accent-1" cursor={quantity === 10 ? 'not-allowed' : 'pointer'} disabled={quantity === 10} onClick={() => setQuantity((prev) => prev + 1)}>
 									<FiPlus size={16} />
 								</InputRightElement>
 							</InputGroup>

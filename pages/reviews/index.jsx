@@ -48,7 +48,11 @@ const Reviews = () => {
 											{review.reviews}
 										</Text>
 
-										<Image borderRadius={12} alt={review._id} src={review.image} />
+										{review.image && (
+											<AspectRatio ratio={1}>
+												<Image borderRadius={12} alt={review._id} src={review.image} />
+											</AspectRatio>
+										)}
 									</Flex>
 								</Card>
 						  ))

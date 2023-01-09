@@ -3,6 +3,7 @@ import Users from 'database/schemas/users'
 import Products from 'database/schemas/products'
 import Carts from 'database/schemas/carts'
 import Orders from 'database/schemas/orders'
+import Receipts from 'database/schemas/receipts'
 import sgMail from '@sendgrid/mail'
 
 export default async (req, res) => {
@@ -26,7 +27,7 @@ export default async (req, res) => {
 				const { data } = req.body
 				const user = await Users.findById({ _id: data.user })
 
-				await Orders.create({
+				const order = await Orders.create({
 					user: {
 						id: user._id,
 						image: user.image,
@@ -45,6 +46,17 @@ export default async (req, res) => {
 						status: true,
 						date: new Date().toLocaleString('en-US', { timeZone: 'Asia/Manila' })
 					},
+					created: new Date().toLocaleString('en-US', { timeZone: 'Asia/Manila' }),
+					updated: new Date().toLocaleString('en-US', { timeZone: 'Asia/Manila' })
+				})
+
+				await Receipts.create({
+					user: user._id,
+					order: order._id,
+					name: user.name,
+					subtotal: order.subtotal,
+					discount: order.discount,
+					total: order.total,
 					created: new Date().toLocaleString('en-US', { timeZone: 'Asia/Manila' }),
 					updated: new Date().toLocaleString('en-US', { timeZone: 'Asia/Manila' })
 				})

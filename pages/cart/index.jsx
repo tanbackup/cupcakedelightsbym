@@ -4,12 +4,38 @@ import api from 'instance'
 import { Container, Flex, Grid, GridItem, Spinner, Text } from '@chakra-ui/react'
 import Items from 'components/cart/items'
 import Details from 'components/cart/details'
+import Address from 'components/cart/address'
+import Controls from 'components/cart/controls'
 import Router from 'next/router'
 
 const Cart = () => {
 	const { data: session } = useSession()
 	const { data: user, isFetched: isUserFetched } = useQuery(['user'], () => api.get('/users', session.user.id))
 	const { data: carts, isFetched: isCartsFetched } = useQuery(['carts'], () => api.get('/carts', session.user.id))
+
+	const subtotal = (data) => {
+		let sum = 0
+
+		data.forEach((data) => {
+			sum += data.product.price * data.quantity
+		})
+
+		return sum
+	}
+
+	const discount = (data) => {
+		let sum = 0
+
+		data.forEach((data) => {
+			sum += data.product.price * data.quantity * (data.product.discount.percentage / 100)
+		})
+
+		return sum
+	}
+
+	const total = (data) => {
+		return subtotal(data) - discount(data)
+	}
 
 	if (!session) {
 		Router.push('/')
@@ -38,8 +64,10 @@ const Cart = () => {
 						<Items carts={carts} />
 					</GridItem>
 
-					<GridItem display="grid">
-						<Details user={user} carts={carts} />
+					<GridItem display="grid" gap={6}>
+						<Details user={user} carts={carts} subtotal={subtotal} discount={discount} total={total} />
+						<Address user={user} />
+						<Controls user={user} carts={carts} subtotal={subtotal} discount={discount} total={total} />
 					</GridItem>
 				</Grid>
 			</Flex>

@@ -22,7 +22,7 @@ const Orders = ({ user, orders }) => {
 							<Tr>
 								<Th>Product</Th>
 								<Th>Total</Th>
-								<Th>Method</Th>
+								<Th>Payment Method</Th>
 								<Th>Status</Th>
 								<Th>Created</Th>
 								<Th></Th>
