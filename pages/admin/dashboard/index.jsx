@@ -47,9 +47,9 @@ const PrintSales = ({ users, isUsersFetched, status, reports }) => {
 					leftIcon={<FiPrinter size={16} />}
 					onClick={() => {
 						onOpen()
-						// setTimeout(() => {
-						// 	window.print()
-						// }, 500)
+						setTimeout(() => {
+						 	window.print()
+						}, 500)
 					}}
 				>
 					Print Sales
