@@ -12,6 +12,29 @@ import { month } from 'functions/month'
 const PrintSales = ({ users, isUsersFetched, status, reports }) => {
 	const disclosure = useDisclosure()
 	let today = new Date().toLocaleString('en-US', { timeZone: 'Asia/Manila' })
+	console.log(reports)
+
+	const sold = (orders) => {
+		let sum = 0
+
+		orders.map((order) => {
+			order.items.items.map((item) => {
+				sum += item.quantity
+			})
+		})
+
+		return sum
+	}
+
+	const sold_item = (item) => {
+		let sum = 0
+
+		item.items.items.map((item) => {
+			sum += item.quantity
+		})
+
+		return sum
+	}
 
 	return (
 		<Modal
@@ -24,9 +47,9 @@ const PrintSales = ({ users, isUsersFetched, status, reports }) => {
 					leftIcon={<FiPrinter size={16} />}
 					onClick={() => {
 						onOpen()
-						setTimeout(() => {
-							window.print()
-						}, 500)
+						// setTimeout(() => {
+						// 	window.print()
+						// }, 500)
 					}}
 				>
 					Print Sales
@@ -51,7 +74,7 @@ const PrintSales = ({ users, isUsersFetched, status, reports }) => {
 					<Flex direction="column" gap={3}>
 						<Flex justify="space-between" align="center" gap={6}>
 							<Text fontSize={14} fontWeight="semibold" textAlign="center" color="black">
-								Sales
+								Total Sales
 							</Text>
 
 							<Text fontSize={14} fontWeight="semibold" textAlign="center" color="black">
@@ -61,11 +84,11 @@ const PrintSales = ({ users, isUsersFetched, status, reports }) => {
 
 						<Flex justify="space-between" align="center" gap={6}>
 							<Text fontSize={14} fontWeight="semibold" textAlign="center" color="black">
-								Sold
+								Total Sold
 							</Text>
 
 							<Text fontSize={14} fontWeight="semibold" textAlign="center" color="black">
-								{reports.items.length}
+								{sold(reports.items)}
 							</Text>
 						</Flex>
 					</Flex>
@@ -96,13 +119,13 @@ const PrintSales = ({ users, isUsersFetched, status, reports }) => {
 
 							<Flex flex={1} direction="column" align="center" gap={3}>
 								<Text fontSize={14} fontWeight="semibold" color="black">
-									Order
+									Sold
 								</Text>
 
 								{reports.items?.map((item, index) => (
 									<Flex justify="space-around" gap={3} key={index}>
 										<Text fontSize={14} fontWeight="medium" textAlign="center" color="black">
-											x{item.items.items.length}
+											{sold_item(item)}
 										</Text>
 									</Flex>
 								))}
@@ -110,7 +133,7 @@ const PrintSales = ({ users, isUsersFetched, status, reports }) => {
 
 							<Flex flex={1} direction="column" align="center" gap={3}>
 								<Text fontSize={14} fontWeight="semibold" color="black">
-									Total
+									Sales
 								</Text>
 
 								{reports.items?.map((item, index) => (
